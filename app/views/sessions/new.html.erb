@@ -11,6 +11,9 @@
     <%= form.password_field :password %>
   </div>
 
+  <%= check_box_tag :remember, params[:remember], true %>
+  <%= label_tag :remember %>
+
   <div class="actions">
     <%= form.submit "Login" %>
   </div>
