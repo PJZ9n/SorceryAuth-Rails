@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resource :user
+  resource :session, only: %i[new create destroy]
+  get "protected" => "home#protected"
+  root "home#index"
 end
