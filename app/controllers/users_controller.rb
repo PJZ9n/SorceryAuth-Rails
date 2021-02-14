@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, except: %i[new create]
+  before_action :require_login, except: %i[new create activate]
   before_action :set_user, only: %i[show edit update destroy]
 
   def show
@@ -34,6 +34,15 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     redirect_to new_session_path, notice: "Destroyed!"
+  end
+
+  def activate
+    if (@user = User.load_from_activation_token(params[:id]))
+      @user.activate!
+      redirect_to(new_session_path, :notice => "User was successfully activated.")
+    else
+      not_authenticated
+    end
   end
 
   private

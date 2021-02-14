@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resource :user
+  resource :user do
+    get :activate
+  end
   resource :session, only: %i[new create destroy]
   get "protected" => "home#protected"
   root "home#index"

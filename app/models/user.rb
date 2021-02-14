@@ -6,4 +6,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   validates :email, uniqueness: true
+
+  before_update :setup_activation, if: -> { email_changed? }
+  after_update :send_activation_needed_email!, if: -> { previous_changes["email"].present? }
 end
